@@ -1,6 +1,24 @@
-import os
-
 # config.py
+import os
+from pathlib import Path
+
+# Attempt to load environment variables from a repository-level .env file when available.
+# This is optional and falls back silently if python-dotenv isn't installed.
+try:
+    from dotenv import load_dotenv
+    _DOTENV_AVAILABLE = True
+except Exception:
+    _DOTENV_AVAILABLE = False
+
+# Look for .env at the repository root (one level above src/)
+_repo_root = Path(__file__).resolve().parents[1]
+_env_path = _repo_root / '.env'
+if _DOTENV_AVAILABLE and _env_path.exists():
+    load_dotenv(dotenv_path=str(_env_path))
+
+# ────────────────────────────────────────────────────────
+# 【共通設定】
+# ────────────────────────────────────────────────────────
 # ────────────────────────────────────────────────────────
 # 【共通設定】
 # ────────────────────────────────────────────────────────
